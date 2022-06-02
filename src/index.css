@@ -11,3 +11,38 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.product-list {
+  padding-right: 10%;
+  width: 70%;
+  height: auto;
+  margin: auto;
+  padding-top: 40px;
+  float: right;
+}
+
+.product {
+  height: 150px;
+  width: 150px;
+  border: 1px black solid;
+  margin-right: 30px;
+  margin-bottom: 30px;
+  float: right;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.shopping-cart {
+  padding-top: 30px;
+  width: 300px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+/* .product-cart {
+  border-bottom: 1px gray solid;
+} */
