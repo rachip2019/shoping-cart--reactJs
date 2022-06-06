@@ -1,50 +1,50 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import * as React from 'react'
 import Product from './Product';
 import ShoppingCart from './ShoppingCart';
-import { ProductModel } from "./models";
+import { ProductModel, SelectedProduct } from "./models";
 
 
 const Store = () => {
     
-    const shoppingCartRef = useRef<{ addProductToCart: (index: number) => void }>(null);
     const [products, SetProducts] = useState<ProductModel[]>([]);
+    const [selectedProducts, SetSelectedProducts] = useState<SelectedProduct[]>([]);
 
     useEffect(() => {
         SetProducts(
             [
-                { name: 'item 1', price: 10, quantity: 0 },
-                { name: 'item 2', price: 38, quantity: 0 },
-                { name: 'item 3', price: 33, quantity: 0 },
-                { name: 'item 4', price: 12, quantity: 0 },
-                { name: 'item 5', price: 15, quantity: 0 },
-                { name: 'item 6', price: 75, quantity: 0 },
-                { name: 'item 7', price: 100, quantity: 0 },
-                { name: 'item 8', price: 58, quantity: 0 },
-                { name: 'item 9', price: 50, quantity: 0 },
-                { name: 'item 10', price: 22, quantity: 0 },
-                { name: 'item 11', price: 20, quantity: 0 },
+                { id: 1, name: 'item 1', price: 10 },
+                { id: 2, name: 'item 2', price: 38 },
+                { id: 3, name: 'item 3', price: 33 },
+                { id: 4, name: 'item 4', price: 12 },
+                { id: 5, name: 'item 5', price: 15 },
+                { id: 6, name: 'item 6', price: 75 },
+                { id: 7, name: 'item 7', price: 100 },
+                { id: 8, name: 'item 8', price: 58 },
+                { id: 9, name: 'item 9', price: 50 },
+                { id: 10, name: 'item 10', price: 22 },
+                { id: 11, name: 'item 11', price: 20 },
             ]
         );
     }, [])
 
 
-    const addProductToCart = (index: number) => {
-        if (shoppingCartRef.current !== null) {
-            shoppingCartRef.current.addProductToCart(index);
-        }
+    const addProductToCart = (product: ProductModel) => {
+        const quantity = (product.id in selectedProducts)? selectedProducts[product.id].quantity: 0
+        selectedProducts[product.id] = {...product, quantity: quantity + 1};
+        SetSelectedProducts({...selectedProducts});
     }
 
     return (
         <div>
             <h1>Welcome to the store!</h1>
             <div className="product-list">
-                {products.map((product, index) => (
-                    <Product key={index} product={product} addProduct={() => addProductToCart(index)}
+                {products.map((product) => (
+                    <Product key={product.id} product={product} addProduct={() => addProductToCart(product)}
                     ></Product>
                 ))}
             </div>
-            <ShoppingCart ref={shoppingCartRef} products={products}></ShoppingCart>
+            <ShoppingCart selectedProducts={selectedProducts}></ShoppingCart>
         </div>
     )
 }

@@ -1,31 +1,35 @@
-import { useImperativeHandle, useState, Ref, forwardRef } from 'react';
+import { useState, useEffect } from 'react';
 import * as React from 'react';
-import { ProductModel } from './models';
+import { SelectedProduct } from './models';
 
 interface ShoppingCartProps {
-    products: ProductModel[]
+    selectedProducts: SelectedProduct[]
 }
 
-const ShoppingCart = forwardRef(({ products }: ShoppingCartProps, ref: Ref<{ addProductToCart: (index: number) => void }>) => {
+const ShoppingCart = ({ selectedProducts }: ShoppingCartProps) => {
     const [totalProducts, SetTotalProducts] = useState(0);
     const [totalAmount, SetTotalAmount] = useState(0);
     const [amountBeforeDiscount, SetAmountBeforeDiscount] = useState(0);
 
-
-    useImperativeHandle(ref, () => ({
-        addProductToCart
-    }));
-
-    const addProductToCart = (index: number) => {
-        products[index].quantity += 1;
+    useEffect(() => {
         calcTotalAmount();
+    }, [selectedProducts]);
+
+    function sum() {
+        var sum = 0;
+        for(var index in selectedProducts) {
+            sum += (selectedProducts[index].price * selectedProducts[index].quantity); 
+        }
+        return sum;
     }
 
     const calcTotalAmount = () => {
-        const totalProds = (products.reduce((total, currentItem) => total = total + currentItem.quantity, 0));
+
+        const totalProds = Object.keys(selectedProducts).length? totalProducts + 1: 0;
+        // const totalAmt = (Object.keys(selectedProducts).reduce((total, item) => total = total + selectedProducts[item].quantity, 0));
+        // const totalProds = (selectedProducts.reduce((total, currentItem) => total = total + currentItem.quantity, 0));
         SetTotalProducts(totalProds);
-        const totalAmt = (products.reduce((total, currentItem) =>
-            total = total + currentItem.quantity * currentItem.price, 0));
+        const totalAmt = sum();
         if (totalProds >= 10) {
             SetAmountBeforeDiscount(totalAmt);
             SetTotalAmount(totalAmt * (100 - totalProds) / 100)
@@ -44,15 +48,14 @@ const ShoppingCart = forwardRef(({ products }: ShoppingCartProps, ref: Ref<{ add
                     <th>sum</th>
                 </tr>
                 <tbody>
-                    {products.map((product, index) => (
-                        product.quantity > 0 ? (
-                            <tr key={index}>
+                    {Object.entries(selectedProducts).map(([key, product]) => (
+                            <tr key={key}>
                                 <td>{product.name}</td>
                                 <td>{product.quantity}</td>
                                 <td>{product.quantity * product.price}</td>
                             </tr>
-                        ) : null
-                    ))}
+                        )
+                    )}
                 </tbody>
             </table>
             {totalAmount === 0 && <span>empty</span>}
@@ -65,6 +68,6 @@ const ShoppingCart = forwardRef(({ products }: ShoppingCartProps, ref: Ref<{ add
 
         </div>
     )
-});
+};
 
 export default ShoppingCart;
