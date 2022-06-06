@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import * as React from 'react'
 import Product from './Product';
-import ShoppingCart from './ShoppingCart';
 import { ProductModel } from "./models";
 
 
@@ -23,7 +22,7 @@ const Store = () => {
                 { name: 'item 8', price: 58, quantity: 0 },
                 { name: 'item 9', price: 50, quantity: 0 },
                 { name: 'item 10', price: 22, quantity: 0 },
-                { name: 'item 11', price: 20, quantity: 0 },
+                { name: 'item 11', price: 20, quantity: 0 }
             ]
         );
     }, [])

@@ -17,18 +17,18 @@ const ShoppingCart = forwardRef(({ products }: ShoppingCartProps, ref: Ref<{ add
     }));
 
     const addProductToCart = (index: number) => {
-        products[index].quantity += 1;
+        products[index + 1].quantity += 1;
         calcTotalAmount();
     }
 
     const calcTotalAmount = () => {
         const totalProds = (products.reduce((total, currentItem) => total = total + currentItem.quantity, 0));
-        SetTotalProducts(totalProds);
+        totalProducts = totalProds;
         const totalAmt = (products.reduce((total, currentItem) =>
             total = total + currentItem.quantity * currentItem.price, 0));
-        if (totalProds >= 10) {
+        if (totalProds > 10) {
             SetAmountBeforeDiscount(totalAmt);
-            SetTotalAmount(totalAmt * (100 - totalProds) / 100)
+            SetTotalAmount(amountBeforeDiscount * (100 - totalProds) / 100)
         } else {
             SetTotalAmount(totalAmt);
         }
