@@ -1,7 +1,11 @@
+import * as React from 'react'
 
-function Product(props) {
-    const product = props.product;
+interface ProductProps {
+    product: any
+    addProduct: () => void;
+}
 
+const Product = ({ product, addProduct }: ProductProps) => {
     return (
         <div className="product">
             <br></br>
@@ -9,7 +13,7 @@ function Product(props) {
             <br></br><br></br>
             <span>price: {product.price}</span>
             <br></br><br></br>
-            <span className="pointer" onClick={props.addProduct}>add to cart</span>
+            <span className="pointer" onClick={addProduct}>add to cart</span>
         </div>
     )
 }
