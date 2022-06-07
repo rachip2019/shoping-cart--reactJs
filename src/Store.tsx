@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import * as React from 'react'
 import Product from './Product';
 import ShoppingCart from './ShoppingCart';
@@ -25,7 +25,7 @@ const Store = () => {
 
 
     const addProductToCart = (product: ProductModel) => {
-        const newProduct = selectedProducts[product.id] || {name: product.name, price: product.price, quantity: 0};
+        const newProduct = selectedProducts[product.id] && {name: product.name, price: product.price, quantity: 0};
         SetSelectedProducts({...selectedProducts, [product.id]: {...newProduct, quantity: newProduct.quantity+1}});
     }
 

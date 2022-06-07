@@ -12,10 +12,8 @@ const ShoppingCart = ({ selectedProducts }: ShoppingCartProps) => {
     const [amountBeforeDiscount, SetAmountBeforeDiscount] = useState(0);
 
     useEffect(() => {
-        console.log(selectedProducts);
-        console.log(typeof selectedProducts);
         calcTotalAmount();
-    }, [selectedProducts]);
+    }, []);
 
     function sumTotal() {
         var sum = 0;
@@ -27,11 +25,11 @@ const ShoppingCart = ({ selectedProducts }: ShoppingCartProps) => {
 
     const calcTotalAmount = () => {
         const totalProds = Object.keys(selectedProducts).length? totalProducts + 1: 0;
-        SetTotalProducts(totalProds);
+        totalProducts = totalProds;
         const totalAmt = sumTotal();
-        if (totalProds >= 10) {
+        if (totalProds > 10) {
             SetAmountBeforeDiscount(totalAmt);
-            SetTotalAmount(totalAmt * (100 - totalProds) / 100)
+            SetTotalAmount(amountBeforeDiscount * (100 - totalProds) / 100)
         } else {
             SetTotalAmount(totalAmt);
         }

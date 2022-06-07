@@ -5,7 +5,7 @@ interface ProductProps {
     addProduct: () => void;
 }
 
-const Product = ({ product, addProduct }: ProductProps) => {
+const Product = ({ product }: ProductProps) => {
     return (
         <div className="product">
             <br></br>
