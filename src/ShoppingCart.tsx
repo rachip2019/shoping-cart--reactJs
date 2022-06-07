@@ -15,7 +15,7 @@ const ShoppingCart = ({ selectedProducts }: ShoppingCartProps) => {
         calcTotalAmount();
     }, [selectedProducts]);
 
-    function sum() {
+    function sumTotal() {
         var sum = 0;
         for(var index in selectedProducts) {
             sum += (selectedProducts[index].price * selectedProducts[index].quantity); 
@@ -24,12 +24,9 @@ const ShoppingCart = ({ selectedProducts }: ShoppingCartProps) => {
     }
 
     const calcTotalAmount = () => {
-
         const totalProds = Object.keys(selectedProducts).length? totalProducts + 1: 0;
-        // const totalAmt = (Object.keys(selectedProducts).reduce((total, item) => total = total + selectedProducts[item].quantity, 0));
-        // const totalProds = (selectedProducts.reduce((total, currentItem) => total = total + currentItem.quantity, 0));
         SetTotalProducts(totalProds);
-        const totalAmt = sum();
+        const totalAmt = sumTotal();
         if (totalProds >= 10) {
             SetAmountBeforeDiscount(totalAmt);
             SetTotalAmount(totalAmt * (100 - totalProds) / 100)

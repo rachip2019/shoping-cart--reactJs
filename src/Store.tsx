@@ -30,8 +30,8 @@ const Store = () => {
 
 
     const addProductToCart = (product: ProductModel) => {
-        const quantity = (product.id in selectedProducts)? selectedProducts[product.id].quantity: 0
-        selectedProducts[product.id] = {...product, quantity: quantity + 1};
+        const quantity = (product.id in selectedProducts)? selectedProducts[product.id].quantity: 0;
+        selectedProducts[product.id] = {name: product.name, price: product.price, quantity: quantity + 1};
         SetSelectedProducts({...selectedProducts});
     }
 
