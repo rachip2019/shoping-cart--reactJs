@@ -3,7 +3,7 @@ import * as React from 'react';
 import { SelectedProduct } from './models';
 
 interface ShoppingCartProps {
-    selectedProducts: SelectedProduct[]
+    selectedProducts: Record<number, SelectedProduct>
 }
 
 const ShoppingCart = ({ selectedProducts }: ShoppingCartProps) => {
@@ -12,6 +12,8 @@ const ShoppingCart = ({ selectedProducts }: ShoppingCartProps) => {
     const [amountBeforeDiscount, SetAmountBeforeDiscount] = useState(0);
 
     useEffect(() => {
+        console.log(selectedProducts);
+        console.log(typeof selectedProducts);
         calcTotalAmount();
     }, [selectedProducts]);
 
