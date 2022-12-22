@@ -1,22 +1,23 @@
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { useImperativeHandle, useState, Ref, forwardRef } from 'react';
+import * as React from 'react';
+import { ProductModel } from './models';
 
-const ShoppingCart = forwardRef((props, ref) => {
-    const [products, SetProducts] = useState([]);
+interface ShoppingCartProps {
+    products: ProductModel[]
+}
+
+const ShoppingCart = forwardRef(({ products }: ShoppingCartProps, ref: Ref<{ addProductToCart: (index: number) => void }>) => {
     const [totalProducts, SetTotalProducts] = useState(0);
     const [totalAmount, SetTotalAmount] = useState(0);
     const [amountBeforeDiscount, SetAmountBeforeDiscount] = useState(0);
 
-    useEffect(() => {
-        SetProducts(props.products);
-    }, [])
 
     useImperativeHandle(ref, () => ({
         addProductToCart
     }));
 
-    const addProductToCart = (index) => {
+    const addProductToCart = (index: number) => {
         products[index].quantity += 1;
-        SetProducts(products);
         calcTotalAmount();
     }
 
